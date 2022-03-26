@@ -1,0 +1,23 @@
+### User sign up endpoint
+POST http://localhost:3001/v1/user
+Content-Type: application/json
+
+{
+    "name": "Tommy Toukan",
+    "company": "kblDesigners",
+    "address": "St. Louis, Mo, USA",
+    "phone": 9576476464,
+    "email": "tommyt@kbldesigners.com",
+    "password": "Yoshi1988"
+}
+
+### User sign in endpoint
+POST http://localhost:3001/v1/user/login
+Content-Type: application/json
+
+{
+    "email": "tommyt@kbldesigners.com",
+    "password": "Yoshi1988"
+
+}
+
