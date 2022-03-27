@@ -5,6 +5,8 @@ const { route, post } = require("./ticket.router");
 const { insertUser, getUserByEmail } = require("../model/user/User.model");
 const { hashPassword, comparePassword } = require("../helpers/bcrypt.helper");
 const { json } = require("express/lib/response");
+const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper");
+
 
 
 
@@ -54,12 +56,24 @@ router.post("/login", async (req, res) => {
   const passFromDb = user && user._id ? user.password : null;
 
   if (!passFromDb)
-    return res.json({status:'error', message: "Invalid Email or Password"});
+    return res.json({status:'error', message: "Invalid Email or Password"
+    });
 
-  const result = await comparePassword(password, passFromDb)
-  console.log(result);
+  const result = await comparePassword(password, passFromDb);
 
-  res.json({status:'success', message: "Login Successful!"});
-});
+  if(!result){
+    return res.json({status:'error', message: "Invalid Email or Password"
+  });
+};
+
+  const accessJWT = await createAccessJWT(user.email);
+  const refreshJWT = await createRefreshJWT(user.email);
+
+  res.json({
+    status:'success',
+    message: "Login Successful!",
+    accessJWT,
+    refreshJWT});
+  });
 
 module.exports = router;
