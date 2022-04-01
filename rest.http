@@ -18,6 +18,12 @@ Content-Type: application/json
 {
     "email": "tommyt@kbldesigners.com",
     "password": "Yoshi1988"
-
 }
+
+### Get a user profile endpoint
+GET http://localhost:3001/v1/user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4ODUxODE0LCJleHAiOjE2NDg4NTI3MTR9.IVJKQwY4Mwv_deMi2y8YldZcgh5rPgldA1mOoE3Hm04
+
+
+
 

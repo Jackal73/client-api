@@ -17,7 +17,6 @@ const comparePassword = (plainPass, passFromDb) => {
   });
 };
 
-
 module.exports = {
   hashPassword,
   comparePassword,
