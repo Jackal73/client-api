@@ -17,7 +17,7 @@ const getUserByEmail = (email) => {
     try {
       UserSchema.findOne({email}, (error, data) => {
         if (error) {
-
+          console.log(error);
           reject(error);
         }
         resolve(data);
@@ -35,7 +35,7 @@ const getUserById = (_id) => {
     try {
       UserSchema.findOne({ _id }, (error, data) => {
         if (error) {
-
+          console.log(error);
           reject(error);
         }
         resolve(data);

@@ -6,7 +6,7 @@ Content-Type: application/json
     "name": "Tommy Toukan",
     "company": "kblDesigners",
     "address": "St. Louis, Mo, USA",
-    "phone": 9576476464,
+    "phone": "9576476464",
     "email": "tommyt@kbldesigners.com",
     "password": "Yoshi1988"
 }
@@ -22,8 +22,12 @@ Content-Type: application/json
 
 ### Get a user profile endpoint
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4ODUxODE0LCJleHAiOjE2NDg4NTI3MTR9.IVJKQwY4Mwv_deMi2y8YldZcgh5rPgldA1mOoE3Hm04
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTE3NzM0LCJleHAiOjE2NDg5MTg2MzR9.e2hYeFElRWA8vcInv_8Az2yHIJZPwIW30TxEiYltktY
 
 
+### Tokens routers
 
+## Get refreshed token
+GET http://localhost:3001/v1/tokens
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTE3NzM0LCJleHAiOjE2NTE1MDk3MzR9.lQGu_2NHv-fT75OR_eVIeM-4693FauRn1W0ENhzlXRc
 
