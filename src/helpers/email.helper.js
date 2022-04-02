@@ -6,8 +6,8 @@ const nodemailer = require("nodemailer");
     port: 587,
     auth: {
         user: 'dan.jones61@ethereal.email',
-        pass: 'UA9xcUKBRtWFFCmjCm'
-    }
+        pass: 'UA9xcUKBRtWFFCmjCm',
+    },
 });
 
 
@@ -29,18 +29,18 @@ const send = (info) => {
     } catch (error) {
       console.log(error);
     }
-  })
-}
+  });
+};
 
 const emailProcessor = (email, pin) => {
 const info = {
   from: '"Tikkit Company" <dan.jones61@ethereal.email>', // sender address
     to: email, // list of receivers
     subject: "Password Reset PIN", // Subject line
-    text: "Here is your Password Reset PIN" + pin + "This PIN will expire in 1 day.", // plain text body
-    html: `<b>Hello </b>
-    Here is your PIN
-    <b>${pin}</b>
+    text: "Here is your Password Reset PIN: " + pin + " This PIN will expire in 1 day.", // plain text body
+    html: `<b>Hello</b>.
+    Here is your PIN:
+    <b> ${pin}</b>.
     This PIN will expire in 1 day.
     <p></p>`, // html body
   }
