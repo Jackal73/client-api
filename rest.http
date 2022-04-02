@@ -22,12 +22,21 @@ Content-Type: application/json
 
 ### Get a user profile endpoint
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTE3NzM0LCJleHAiOjE2NDg5MTg2MzR9.e2hYeFElRWA8vcInv_8Az2yHIJZPwIW30TxEiYltktY
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTE5OTI0LCJleHAiOjE2NDg5MjA4MjR9.L6tEWmK8iPj9LOzx021gZC2RwO4mz2oPR-YBn3R8Jfw
 
 
 ### Tokens routers
 
 ## Get refreshed token
 GET http://localhost:3001/v1/tokens
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTE3NzM0LCJleHAiOjE2NTE1MDk3MzR9.lQGu_2NHv-fT75OR_eVIeM-4693FauRn1W0ENhzlXRc
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTE5OTI0LCJleHAiOjE2NTE1MTE5MjR9.VTdSs3AyDVGLUecLlJ3gkkoFgCjAxHpWMYpztC3nqXY
 
+
+### Password reset endpoints
+POST http://localhost:3001/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "email": "tommyt@kbldesigners.com"
+
+}
