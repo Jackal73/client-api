@@ -24,7 +24,7 @@ const send = (info) => {
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(result));
       // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
-      resolve(result)
+      resolve(result);
 
     } catch (error) {
       console.log(error);
@@ -32,20 +32,41 @@ const send = (info) => {
   });
 };
 
-const emailProcessor = (email, pin) => {
-const info = {
-  from: '"Tikkit Company" <dan.jones61@ethereal.email>', // sender address
-    to: email, // list of receivers
-    subject: "Password Reset PIN", // Subject line
-    text: "Here is your Password Reset PIN: " + pin + " This PIN will expire in 1 day.", // plain text body
-    html: `<b>Hello</b>.
-    Here is your PIN:
-    <b> ${pin}</b>.
-    This PIN will expire in 1 day.
-    <p></p>`, // html body
+const emailProcessor = ({ email, pin, type }) => {
+  let info = "";
+  switch (type) {
+    case "request-new-password":
+      info = {
+        from: '"Tikkit Company" <i4ews3i3bmx2jywn@ethereal.email>', // sender address
+        to: email, // list of receivers
+        subject: "Password Reset PIN", // Subject line
+        text: "Here is your Password Reset PIN: " + pin + " This PIN will expire in 1 day.", // plain text body
+        html: `<b>Hello</b>.
+        Here is your PIN:
+        <b> ${pin}</b>.
+        This PIN will expire in 24 hours.
+        <p></p>`, // html body
+      };
+
+      send(info);
+      break;
+
+    case "update-password-success":
+      info = {
+        from: '"Tikkit Company" <i4ews3i3bmx2jywn@ethereal.email>', // sender address
+        to: email, // list of receivers
+        subject: "Password updated", // Subject line
+        text: "Your new password has been updated.", // plain text body
+        html: `<b>Hello,</b>.
+        <p>Your new password has been updated.</p>`, // html body
+      };
+
+      send(info);
+      break;
+
+    default:
+      break;
   }
+};
 
-  send(info)
-}
-
-module.exports = { emailProcessor }
+module.exports = { emailProcessor };

@@ -17,12 +17,12 @@ Content-Type: application/json
 
 {
     "email": "tommyt@kbldesigners.com",
-    "password": "Yoshi1988"
+    "password": "password2"
 }
 
 ### Get a user profile endpoint
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTMyODc5LCJleHAiOjE2NDg5MzM3Nzl9.NoK0whkn7pcrOv-Bn1MO7oSvCrdhqOmZw5b-AZ7O1B8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTk3MjA1LCJleHAiOjE2NDg5OTgxMDV9.AnEKv-Lxl9ofYQBMwoa_O2fRiESoKSg7dViy-r7JU4Y
 
 
 ### Tokens routers
@@ -32,7 +32,7 @@ GET http://localhost:3001/v1/tokens
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTMyODc5LCJleHAiOjE2NTE1MjQ4Nzl9.G5jvamR9iyb0VQMEEFiYYTbiVZrjFHi_IOgzHeDTrWY
 
 
-### Password reset endpoints
+### Password reset request endpoint
 POST http://localhost:3001/v1/user/reset-password
 Content-Type: application/json
 
@@ -41,3 +41,13 @@ Content-Type: application/json
 
 }
 
+### Update new password endpoint
+PATCH http://localhost:3001/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "email": "tommyt@kbldesigners.com",
+    "pin": 615827,
+    "newPassword": "password2"
+
+}
