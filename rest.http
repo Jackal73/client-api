@@ -47,7 +47,7 @@ Content-Type: application/json
 
 {
     "email": "tommyt@kbldesigners.com",
-    "pin": 615827,
+    "pin": 781689,
     "newPassword": "password2"
 
 }
