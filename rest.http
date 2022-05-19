@@ -22,7 +22,8 @@ Content-Type: application/json
 
 ### Get a user profile endpoint
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTk3MjA1LCJleHAiOjE2NDg5OTgxMDV9.AnEKv-Lxl9ofYQBMwoa_O2fRiESoKSg7dViy-r7JU4Y
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM2OTI3LCJleHAiOjE2NTI5Mzc4Mjd9.Ii-k9BZiykBsVkzehGD6rmrevYEXRSOJfkxmURy8mo4
+
 
 
 ### Tokens routers
@@ -49,5 +50,12 @@ Content-Type: application/json
     "email": "tommyt@kbldesigners.com",
     "pin": 781689,
     "newPassword": "password2"
-
 }
+
+#### user logout endpoint
+DELETE http://localhost:3001/v1/user/logout
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
+
+
+
+
