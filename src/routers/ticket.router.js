@@ -87,4 +87,33 @@ router.get('/:_id', userAuthorization, async (req, res) => {
 		});
 	}
 });
+
+// - update reply message from client
+router.put('/:_id', userAuthorization, async (req, res) => {
+
+	try {
+		const {message, sender} = req.body;
+		const {_id} = req.params;
+		const clientId = req.userId;
+		const result = await updateClientReply({_id, message, sender});
+
+		if (result._id) {
+			return res.json({
+				status: "success",
+				message: "Message was updated successfully",
+			});
+		}
+		res.json({
+			status: "error",
+			message: "Unable to update message, please try again later",
+		});
+
+	} catch (error) {
+		res.json({
+			status: "error",
+			message: error.message
+		});
+	}
+});
+
 module.exports = router;
