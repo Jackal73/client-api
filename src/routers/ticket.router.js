@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { insertTicket, getTickets, getTicketById, updateClientReply } = require("../model/ticket/Ticket.model");
+const { insertTicket, getTickets, getTicketById, updateClientReply, updateStatusClose } = require("../model/ticket/Ticket.model");
 const { userAuthorization } = require("../middlewares/authorization.middleware");
 
 router.all("/", (req, res, next) => {
@@ -12,7 +12,6 @@ router.all("/", (req, res, next) => {
 router.post('/', userAuthorization, async (req, res) => {
 	try {
 		const{ subject, sender, message } = req.body;
-
 		const userId = req.userId;
 
 		const ticketObj = {
@@ -49,7 +48,6 @@ router.post('/', userAuthorization, async (req, res) => {
 // - get all tickets for a specific user
 router.get('/', userAuthorization, async (req, res) => {
 	try {
-
 		const userId = req.userId;
 
 		const result = await getTickets(userId);
@@ -73,6 +71,7 @@ router.get('/:_id', userAuthorization, async (req, res) => {
 	try {
 		const {_id} = req.params;
 		const clientId = req.userId;
+
 		const result = await getTicketById(_id, clientId);
 
 		return res.json({
@@ -95,6 +94,7 @@ router.put('/:_id', userAuthorization, async (req, res) => {
 		const {message, sender} = req.body;
 		const {_id} = req.params;
 		const clientId = req.userId;
+
 		const result = await updateClientReply({_id, message, sender});
 
 		if (result._id) {
@@ -106,6 +106,34 @@ router.put('/:_id', userAuthorization, async (req, res) => {
 		res.json({
 			status: "error",
 			message: "Unable to update message, please try again later",
+		});
+
+	} catch (error) {
+		res.json({
+			status: "error",
+			message: error.message
+		});
+	}
+});
+
+// - update ticket status to closed
+router.patch('/close-ticket/:_id', userAuthorization, async (req, res) => {
+
+	try {
+		const {_id} = req.params;
+		const clientId = req.userId;
+
+		const result = await updateStatusClose({_id, clientId});
+
+		if (result._id) {
+			return res.json({
+				status: "success",
+				message: "The ticket has been closed",
+			});
+		}
+		res.json({
+			status: "error",
+			message: "Unable to update the ticket",
 		});
 
 	} catch (error) {
