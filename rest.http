@@ -8,7 +8,7 @@ Content-Type: application/json
     "address": "St. Louis, Mo, USA",
     "phone": "9576476464",
     "email": "tommyt@kbldesigners.com",
-    "password": "Yoshi1988"
+    "password": "password2"
 }
 
 ### User sign in endpoint
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 ### Get a user profile endpoint
 GET http://localhost:3001/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM2OTI3LCJleHAiOjE2NTI5Mzc4Mjd9.Ii-k9BZiykBsVkzehGD6rmrevYEXRSOJfkxmURy8mo4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUzNjI5NDE0LCJleHAiOjE2NTM3MTU4MTR9.BZl1Z2E3rO0gwiwthmClDjroO1yxVMDPG47zWFZgbgc
 
 
 
@@ -30,7 +30,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxk
 
 ## Get refreshed token
 GET http://localhost:3001/v1/tokens
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjQ4OTMyODc5LCJleHAiOjE2NTE1MjQ4Nzl9.G5jvamR9iyb0VQMEEFiYYTbiVZrjFHi_IOgzHeDTrWY
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUzNjI5NTQ5LCJleHAiOjE2NTYyMjE1NDl9.u02EwQOtnS_enLodCLDgZ97-lDhbh9DkRkajg3tBDP0
+
 
 
 ### Password reset request endpoint
@@ -48,7 +49,7 @@ Content-Type: application/json
 
 {
     "email": "tommyt@kbldesigners.com",
-    "pin": 781689,
+    "pin": 712078,
     "newPassword": "password2"
 }
 
@@ -58,4 +59,46 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxk
 
 
 
+### Ticket API's
 
+### Open new ticket
+POST http://localhost:3001/v1/ticket
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
+Content-Type: application/json
+
+{
+    "subject": "Test ticket",
+    "sender": "ShawnK",
+    "message": "This is a test ticket"
+}
+
+
+### Get all tickets
+GET http://localhost:3001/v1/ticket
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
+
+
+### Get single ticket
+GET http://localhost:3001/v1/ticket/6289c887aea7bf3b30a9307f
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
+
+
+### Reply message to ticket
+PUT http://localhost:3001/v1/ticket/6289c887aea7bf3b30a9307f
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
+Content-Type: application/json
+
+{
+    "message": "This is the 222 reply",
+    "sender": "ShawnK"
+}
+
+
+### Close ticket
+PATCH http://localhost:3001/v1/ticket/close-ticket/6289c887aea7bf3b30a9307f
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
+
+
+### Delete ticket
+DELETE http://localhost:3001/v1/ticket/6289c887aea7bf3b30a9307f
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbW15dEBrYmxkZXNpZ25lcnMuY29tIiwiaWF0IjoxNjUyOTM4NDcwLCJleHAiOjE2NTI5MzkzNzB9.JVcXVLhCIvdjW9edBYNKu9KKX5MtimNx6o2-ykUxjO4
