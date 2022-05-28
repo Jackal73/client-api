@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { storeUserRefreshJWT } = require('../model/user/User.model');
-const { setJWT, getJwt } = require('./redis.helper');
+const { setJWT, getJWT } = require('./redis.helper');
+const { token } = require("morgan");
 
 const createAccessJWT = async (email, _id) => {
   try {
@@ -21,7 +22,7 @@ const createRefreshJWT = async (email, _id) => {
 
   try {
     const refreshJWT = jwt.sign({ email },
-      process.env.JWT_ACCESS_SECRET, {
+      process.env.JWT_REFRESH_SECRET, {
         expiresIn: "30d",
       });
 
