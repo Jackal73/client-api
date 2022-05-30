@@ -145,12 +145,12 @@ router.patch('/close-ticket/:_id', userAuthorization, async (req, res) => {
 		if (result._id) {
 			return res.json({
 				status: "success",
-				message: "The ticket has been closed",
+				message: "This ticket has been closed",
 			});
 		}
 		res.json({
 			status: "error",
-			message: "Unable to update the ticket",
+			message: "Unable to close this ticket",
 		});
 
 	} catch (error) {
@@ -172,7 +172,7 @@ router.delete('/:_id', userAuthorization, async (req, res) => {
 
 			return res.json({
 				status: "success",
-				message: "The ticket has been deleted!",
+				message: "This ticket has been deleted!",
 			});
 
 	} catch (error) {
