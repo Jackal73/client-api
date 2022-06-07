@@ -6,15 +6,28 @@ const {
   getUserByEmail,
   getUserById,
   updatePassword,
-  storeUserRefreshJWT
+  storeUserRefreshJWT,
+  verifyUser,
 } = require("../model/user/User.model");
 const { hashPassword, comparePassword } = require("../helpers/bcrypt.helper");
-const { createAccessJWT, createRefreshJWT } = require("../helpers/jwt.helper");
+const {
+  createAccessJWT,
+  createRefreshJWT
+} = require("../helpers/jwt.helper");
 const { userAuthorization } = require("../middlewares/authorization.middleware");
-const { setPasswordResetPin, getPinByEmailPin, deletePin } = require("../model/resetPin/resetPin.model");
+const {
+  setPasswordResetPin,
+  getPinByEmailPin,
+  deletePin
+} = require("../model/resetPin/resetPin.model");
 const { emailProcessor } = require("../helpers/email.helper");
-const { resetPassReqValidation, updatePassValidation } = require("../middlewares/formValidation.middleware");
+const { resetPassReqValidation,
+  updatePassValidation,
+  newUserValidation
+} = require("../middlewares/formValidation.middleware");
 const { deleteJWT } = require("../helpers/redis.helper");
+
+const verificationURL = "http://localhost:3000/verification/";
 
 router.all("/", (req, res, next) => {
 	 // res.json({ message: "return from user router" });
@@ -29,6 +42,7 @@ router.get("/", userAuthorization, async (req, res) => {
   const _id = req.userId
 
   const userProf = await getUserById(_id);
+
   const { name, email } = userProf;
   res.json({
     user: {
@@ -39,26 +53,71 @@ router.get("/", userAuthorization, async (req, res) => {
   });
 });
 
+// verify user after user has signed up
+router.patch("/verify", async (req, res) => {
+  try {
+    // this data coming from database
+    const { _id, email } = req.body;
+    console.log(_id, email);
+    // update our user database
+    const result = await verifyUser(_id, email);
+
+    if (result && result._id) {
+      return res.json({
+        status: "success",
+        message: "Your account has been activated, you can sign in.",
+      });
+    }
+
+    return res.json({
+      status: "error",
+      message: "Invalid request!",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      status: "error",
+      message: "Invalid request!",
+    });
+  }
+});
+
 // Create new user router
-router.post("/", async (req, res) => {
+router.post("/", newUserValidation, async (req, res) => {
   const { name, company, address, phone, email, password } = req.body
 
   try {
     // hash password
     const hashedPass = await hashPassword(password);
 
-    const newUserObj = {name, company, address, phone, email, password: hashedPass };
-
+    const newUserObj = {
+      name,
+      company,
+      address,
+      phone,
+      email,
+      password: hashedPass
+    };
     const result = await insertUser(newUserObj);
     console.log(result);
 
-    res.json({message: "New user created", result });
+    await emailProcessor({
+      email,
+      type:'new-user-confirmation-required',
+      verificationLink: verificationURL + result._id + "/" + email,
+    });
 
+    // send confirmation email
+    res.json({ status:'success', message: "New user created", result });
   } catch (error) {
     console.log(error);
-    res.json({ status:'error', message: error.message });
-  }
 
+    let message = "Unable to create new user at this time. Please try again or contact software support."
+    if(error.message.includes("duplicate key error collection")) {
+      message = "This email already has an account."
+    }
+    res.json({ status:'error', message });
+  }
 });
 
 // User sign in router
@@ -73,6 +132,14 @@ router.post("/login", async (req, res) => {
 
   // get user data with email from db
   const user = await getUserByEmail(email);
+
+  if (!user.isVerified) {
+    return res.json({
+      status: "error",
+      message:
+        "Your account has not been verified. Please check your email and verify your account before logging in again!",
+    });
+  }
 
   const passFromDb = user && user._id ? user.password : null;
 
@@ -163,7 +230,6 @@ router.patch("/reset-password", updatePassValidation, async (req, res) => {
 });
 
 // User logout and invalidate JWTs
-
 router.delete("/logout", userAuthorization, async (req, res) => {
   const { authorization } = req.headers;
 

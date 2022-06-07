@@ -47,7 +47,7 @@ router.post(
 			if (result._id) {
 				return res.json({
 					status: "success",
-					message: "New ticket has been created",
+					message: "The new ticket has been created",
 				});
 			}
 			res.json({

@@ -10,7 +10,6 @@ const nodemailer = require("nodemailer");
     },
 });
 
-
 const send = (info) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -32,7 +31,7 @@ const send = (info) => {
   });
 };
 
-const emailProcessor = ({ email, pin, type }) => {
+const emailProcessor = ({ email, pin, type, verificationLink= "" }) => {
   let info = "";
   switch (type) {
     case "request-new-password":
@@ -52,6 +51,7 @@ const emailProcessor = ({ email, pin, type }) => {
       break;
 
     case "update-password-success":
+
       info = {
         from: '"Tikkit Company" <i4ews3i3bmx2jywn@ethereal.email>', // sender address
         to: email, // list of receivers
@@ -63,6 +63,21 @@ const emailProcessor = ({ email, pin, type }) => {
 
       send(info);
       break;
+
+      case "new-user-confirmation-required":
+
+        info = {
+          from: '"CMR Company" <abe.kohler59@ethereal.email>', // sender address
+          to: email, // list of receivers
+          subject: "Please verify your new user", // Subject line
+          text: "Please follow the link to verify your account.", // plain text body
+          html: `<b>Hello </b>
+            <p>Please follow the link to verify your account.</p>
+            <p>${verificationLink}</P>`, // html body
+        };
+
+        send(info);
+        break;
 
     default:
       break;
