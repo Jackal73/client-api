@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "API for tikkit client-side app",
   "main": "app.js",
+  "engines": {
+    "node": "16.16.0",
+    "npm": "7.20.6"
+  },
   "scripts": {
     "client-install": "npm install --prefix client",
     "server": "nodemon server.js",
