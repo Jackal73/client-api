@@ -74,7 +74,7 @@ router.patch("/verify", async (req, res) => {
       message: "Invalid request!",
     });
   } catch (error) {
-    console.log(error);
+
     return res.json({
       status: "error",
       message: "Invalid request!",
@@ -112,7 +112,7 @@ router.post("/", newUserValidation, async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    let message = "Unable to create new user at this time. Please try again or contact software support."
+    let message = "Unable to create new user at this time. Please try again or contact software support.";
     if(error.message.includes("duplicate key error collection")) {
       message = "This email already has an account."
     }

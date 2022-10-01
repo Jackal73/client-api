@@ -13,8 +13,14 @@ const newPassword = Joi.string()
   .max(30)
   .required();
 const shortStr = Joi.string().min(2).max(50);
+const shortStrZero = Joi.string().min(2).max(50);
 const longStr = Joi.string().min(2).max(1000);
 const dt = Joi.date();
+const num= Joi.number().min(0).max(999999999999999).required();
+const bool = Joi.boolean()
+const num1= Joi.number().min(0).max(999999999999999);
+
+
 
 const resetPassReqValidation = (req, res, next) => {
   const schema = Joi.object({email});
@@ -38,10 +44,34 @@ const updatePassValidation = (req, res, next) => {
 const createNewTicketValidation = (req, res, next) => {
 
     const schema = Joi.object({
-      subject: shortStr.required(),
-      sender: shortStr.required(),
-      message: longStr.required(),
-      issueDate: dt.required()
+      fileNo: shortStr.required(),
+      closeDate: dt.required(),
+      fundDate: dt.required(),
+      dealType: shortStr.required(),
+      closerOne: shortStr.required(),
+      commishClOne: num.required(),
+      closerTwo: shortStr,
+      commishClTwo: num1,
+      mobCloser: shortStr,
+      mobFee: num1,
+      overage: num1.required(),
+      processorOne: shortStr.required(),
+      commishPrOne: num1.required(),
+      processorTwo: shortStr,
+      commishPrTwo: num1,
+      clientRefOne: shortStr.required(),
+      clientRefTwo: shortStr,
+      realAgentOne: shortStr.required(),
+      realAgentTwo: shortStr,
+      lnOfficer: shortStr.required(),
+      salesRepOne: shortStr.required(),
+      salesTypeOne: shortStr.required(),
+      salesRepTwo: shortStr,
+      salesTypeTwo: shortStr,
+      discount: shortStr.required(),
+      discountApproval: shortStr,
+      freedomCheck: num.required(),
+      message: longStr,
     });
 
     const value = schema.validate(req.body);
@@ -54,8 +84,8 @@ const createNewTicketValidation = (req, res, next) => {
 
 const replyTicketMessageValidation = (req, res, next) => {
   const schema = Joi.object({
-    sender: shortStr.required(),
-    message: longStr.required()
+    // sender: shortStr.required(),
+    // message: longStr.required()
   });
 
   const value = schema.validate(req.body);

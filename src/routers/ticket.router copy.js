@@ -5,7 +5,7 @@ const {
 	getTickets,
 	getTicketById,
 	updateClientReply,
-	// updateStatusClose,
+	updateStatusClose,
 	deleteTicket
 } = require("../model/ticket/Ticket.model");
 const {
@@ -28,40 +28,18 @@ router.post(
 	userAuthorization,
 	async (req, res) => {
 		try {
-			// const{ subject, sender, message } = req.body;
-			const{ fileNo, closeDate, fundDate, dealType, closerOne, commishClOne, closerTwo, commishClTwo, mobCloser, mobFee, overage, processorOne, commishPrOne, processorTwo, commishPrTwo, clientRefOne, clientRefTwo, realAgentOne, realAgentTwo, lnOfficer, salesRepOne, salesTypeOne, salesRepTwo, salesTypeTwo, discount, discountApproval,freedomCheck, message} = req.body;
+			const{ subject, sender, message } = req.body;
 			const userId = req.userId;
 
 			const ticketObj = {
 				clientId: userId,
-				fileNo,
-				closeDate: new Date(closeDate),
-				fundDate: new Date(fundDate),
-				dealType,
-				closerOne,
-				commishClOne,
-				closerTwo,
-				commishClTwo,
-				mobCloser,
-				mobFee,
-				overage,
-				processorOne,
-				commishPrOne,
-				processorTwo,
-				commishPrTwo,
-				clientRefOne,
-				clientRefTwo,
-				realAgentOne,
-				realAgentTwo,
-				lnOfficer,
-				salesRepOne,
-				salesTypeOne,
-				salesRepTwo,
-				salesTypeTwo,
-				discount,
-				discountApproval,
-				freedomCheck,
-				message
+				subject,
+				conversations: [
+					{
+						sender,
+						message,
+					},
+				],
 			};
 
 			const result = await insertTicket(ticketObj);
@@ -156,32 +134,32 @@ router.put('/:_id', replyTicketMessageValidation, userAuthorization, async (req,
 });
 
 // - update ticket status to closed
-// router.patch('/close-ticket/:_id', userAuthorization, async (req, res) => {
+router.patch('/close-ticket/:_id', userAuthorization, async (req, res) => {
 
-// 	try {
-// 		const {_id} = req.params;
-// 		const clientId = req.userId;
+	try {
+		const {_id} = req.params;
+		const clientId = req.userId;
 
-// 		const result = await updateStatusClose({_id, clientId});
+		const result = await updateStatusClose({_id, clientId});
 
-// 		if (result._id) {
-// 			return res.json({
-// 				status: "success",
-// 				message: "This ticket has been closed",
-// 			});
-// 		}
-// 		res.json({
-// 			status: "error",
-// 			message: "Unable to close this ticket",
-// 		});
+		if (result._id) {
+			return res.json({
+				status: "success",
+				message: "This ticket has been closed",
+			});
+		}
+		res.json({
+			status: "error",
+			message: "Unable to close this ticket",
+		});
 
-// 	} catch (error) {
-// 		res.json({
-// 			status: "error",
-// 			message: error.message
-// 		});
-// 	}
-// });
+	} catch (error) {
+		res.json({
+			status: "error",
+			message: error.message
+		});
+	}
+});
 
 // - delete a ticket
 router.delete('/:_id', userAuthorization, async (req, res) => {
@@ -203,23 +181,6 @@ router.delete('/:_id', userAuthorization, async (req, res) => {
 			message: error.message
 		});
 	}
-});
-
-router.get("/exportData", (req, res) => {
-  var wb = XLSX.utils.book_new(); //new workbook
-  TicketSchema.find((err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      var temp = JSON.stringify(data);
-      temp = JSON.parse(temp);
-      var ws = XLSX.utils.json_to_sheet(temp);
-      var down = __dirname + "/public/exportdata.xlsx";
-      XLSX.utils.book_append_sheet(wb, ws, "sheet1");
-      XLSX.writeFile(wb, down);
-      res.download(down);
-    }
-  });
 });
 
 module.exports = router;

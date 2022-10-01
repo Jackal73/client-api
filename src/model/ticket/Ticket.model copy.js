@@ -61,24 +61,24 @@ const updateClientReply = ({ _id, message, sender }) => {
   });
 }
 
-// const updateStatusClose = ({ _id, clientId }) => {
-//   return new Promise((resolve, reject) => {
-//     try {
-//       TicketSchema
-//         .findOneAndUpdate(
-//           {_id, clientId},
-//           {
-//             status: 'Closed',
-//           },
-//           {new: true}
-//         )
-//         .then((data) => resolve(data))
-//         .catch((error) => reject(error));
-//     } catch (error) {
-//       reject(error);
-//     }
-//   });
-// }
+const updateStatusClose = ({ _id, clientId }) => {
+  return new Promise((resolve, reject) => {
+    try {
+      TicketSchema
+        .findOneAndUpdate(
+          {_id, clientId},
+          {
+            status: 'Closed',
+          },
+          {new: true}
+        )
+        .then((data) => resolve(data))
+        .catch((error) => reject(error));
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
 
 const deleteTicket = ({ _id, clientId }) => {
   return new Promise((resolve, reject) => {
@@ -100,6 +100,6 @@ module.exports = {
   getTickets,
   getTicketById,
   updateClientReply,
-  // updateStatusClose,
+  updateStatusClose,
   deleteTicket,
 };
