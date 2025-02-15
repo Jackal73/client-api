@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -11,7 +11,28 @@ const app = express();
 // app.use(helmet());
 
 // -------------- Handle CORS error ---------------------
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:3002",
+    "https://frdm-user.adaptable.app",
+    "https://tikkit-admin.adaptable.app",
+    "https://tikkit-admin-back.adaptable.app",
+    "https://tikkit-userapi-old.onrender.com",
+    "https://tikkit-userapi.onrender.com",
+    "https://tikkit-userapi.onrender.com/v1/user/login",
+    "https://tikket-user.onrender.com",
+  ],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  credentials: true, // access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+// -------------- Handle CORS error ---------------------
+app.use(cors(corsOptions));
 
 // -------------- MongoDB connection setup --------------
 const mongoose = require("mongoose");
@@ -43,19 +64,15 @@ app.use(bodyParser.json());
 
 // -------------- PORT to use ---------------------------
 
-
 // -------------- Load routers --------------------------
 const userRouter = require("./src/routers/user.router");
 const ticketRouter = require("./src/routers/ticket.router");
 const tokensRouter = require("./src/routers/tokens.router");
 
-
-
 // -------------- Use routers ---------------------------
 app.use("/v1/user", userRouter);
 app.use("/v1/ticket", ticketRouter);
 app.use("/v1/tokens", tokensRouter);
-
 
 // -------------- Error handler -------------------------
 const handleError = require("./src/utils/errorHandler");
@@ -71,5 +88,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(port, () => {
-    console.log(`API is ready on http://localhost:${port}`);
+  console.log(`API is ready on http://localhost:${port}`);
 });
